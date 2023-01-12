@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<script type="text/javascript">
+  "use strict";
+  let ws = new WebSocket("ws://10.1.0.52:8080/serverchat/textChat"); // [2]
+
+  function inviaAlServer(){
+    let messaggio = "login|"+document.getElementById("username").value+"|"
+    +document.getElementById("password").value;
+    ws.send(messaggio);  // [3]
+    console.log();
+  }
+  function inviaMessaggio(){
+    let mess = document.getElementById("msg").value;
+    ws.send( mess );  // [3]
+  }
+  function chiudiLaConnessione(){
+    ws.close();  // [4]
+  }
+
+</script>
+</head>
+<body>
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input id="username" type="text" >
+  
+      <label for="psw"><b>Password</b></label>
+      <input id="password" type="text" >
+
+      <button onClick="inviaAlServer()" type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+      <textarea id="ricezione" readonly></textarea><br/>
+      <input id="msg" type="text" />
+      <button onClick="chiudiLaConnessione()">chiudi</button>
+      <button onClick="inviaMessaggio()">invia!</button>
+    </div>
+  
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="https://www.youtube.com/watch?v=tiUb_Gwvt60">password?</a></span>
+    </div>
+  </form>
+</body>
+</html>
