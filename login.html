@@ -3,20 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
+<style>
+  #ricezione {
+    display : none;
+  }
+
+
+</style>
 <script type="text/javascript">
   "use strict";
   let ws = new WebSocket("ws://10.1.0.52:8080/serverchat/textChat"); // [2]
+  let x = document.getElementById("container");
+  let accesso= false;
+  
 
+  ws.onmessage = gestoreRicezione;
+
+  function gestoreRicezione(messaggio){    
+    if(messaggio.data == "auth|benvenuto"){
+      accesso = true;
+    }
+    if(accesso == true){
+      container.style.display = "none";
+      ricezione.style.display = "block";
+      document.getElementById("luca").textContent += messaggio.data +"\n";
+    }
+    
+  }
   function inviaAlServer(){
     let messaggio = "login|"+document.getElementById("username").value+"|"
     +document.getElementById("password").value;
-    ws.send(messaggio);  // [3]
+    console.log(messaggio)
+    ws.send(messaggio);  
   }
+  function inviaMessaggio(){
+    let messaggio = document.getElementById("testo").value;
+    ws.send(messaggio);
+  }
+
 
 </script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="container">
       <label for="uname"><b>Username</b></label>
       <input id="username" type="text" >
   
@@ -28,11 +57,11 @@
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
     </div>
-  
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" class="cancelbtn">Cancel</button>
-      <span class="psw">Forgot <a href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.alamy.it%2Ffoto-immagine-pietra-tombale-con-rip-130727145.html&psig=AOvVaw3hkLj0jLJejnblIbbwf8WI&ust=1671183892442000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCIDJrKSr-_sCFQAAAAAdAAAAABAD">password?</a></span>
+    <div id ="ricezione">
+      <textarea readonly id="luca"></textarea><br>
+      <input id="testo" type="text" >
+      <button onClick="inviaMessaggio()" type="submit">Invia</button>
     </div>
-  </form>
+    
 </body>
 </html>
