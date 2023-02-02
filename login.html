@@ -7,20 +7,46 @@
   #ricezione {
     display : none;
   }
-  body {
-  background-image: url("sfondo.jpg");
+  #testo{
+    background-image: url("sfondoIns.jfif");
+    font-size: 12pt;
   }
-  #luca{
-    border-style: dashed;
-    border-color: rgb(218, 45, 45);
+  #username{
+    background-image: url("sfondoIns.jfif");
+    font-size: 12pt;
+  }
+  #password{
+    background-image: url("sfondoIns.jfif");
+    font-size: 12pt;
+  }
+
+  body {
+  background-image: url("sfondoDietro.jpg");
   }
   #lista{
-    border-style: double;
-    border-color: rgb(63, 129, 206);
+    border-style: ridge;
+    color: rgb(0, 0, 0);
+    background-image: url("");
+    background-image: url("sfondoAvanti.png");
+    border-color: rgb(160, 50, 50);
+    border-width: 1;
+    font-size: 14pt;
+  }
+  #chat{
+    border-style: solid;
+    background-image: url("sfondoAvanti.png");
+    color: rgb(0, 0, 0);
+    border-color: rgb(0, 69, 148);
+    font-size: 13pt;
+    
   }
   #send{
     border-style: solid;
     border-color: rgb(79, 219, 79);
+    font-size: 12pt;
+  }
+  #ricordami{
+    font-size: 12pt;
   }
 
 
@@ -53,11 +79,12 @@
       ricezione.style.display = "block";
 
       if(mess[0] == "msg"){
-      document.getElementById("lista").textContent += "ORE " +mess[1] +" DA " +mess[2] +" DICE "+ mess[3] +"\n"
+      document.getElementById("chat").textContent += "ORE " +mess[1] +" DA " +mess[2] +" : "+ mess[3] +"\n"
     }
     if(mess[0] == "lista"){
-      document.getElementById("luca").textContent += mess+"\n"
-    }
+      mess.splice(0,1);
+      document.getElementById("lista").innerHTML ="Lista : " +mess +"\n"
+     }
     }
     
   }
@@ -84,14 +111,10 @@
       <input id="password" type="text" >
 
       <button onClick="inviaAlServer()" type="submit">Login</button>
-      <label><br>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label><br>
-      <span >Forgot <a href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.dreamstime.com%2Fphotos-images%2Fi-dont-care.html&psig=AOvVaw1Lkqu1zw6GupKvzJyGkwMW&ust=1674815764978000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCOjptIqF5fwCFQAAAAAdAAAAABAX">password?</a></span>
     </div>
     <div id ="ricezione">
-      <textarea readonly id="luca" rows="5" cols="60"></textarea><br>
-      <textarea readonly id="lista" rows="4" cols="50" ></textarea><br>
+      <p readonly id="lista" rows="2" cols="55"></p>
+      <p><textarea readonly  id="chat" rows="10" cols="45" ></textarea><p>
       <input id="testo" type="text" >
       <button onClick="inviaMessaggio()" type="submit" id="send">Invia</button>
     </div>
